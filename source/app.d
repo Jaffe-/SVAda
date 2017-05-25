@@ -2,6 +2,7 @@ import std.stdio;
 import std.algorithm;
 import std.array;
 import parser;
+import expression;
 
 struct Trace {
     enum Value {
@@ -59,13 +60,17 @@ class DelayChecker : IChecker {
 
 void main()
 {
-    auto tree = parseSVA("a && b || c");
-    writeln(tree.children[0].children[0].matches);
-    //    auto t2 = create_tree(tree);
-
-    auto t = Trace("00001010x");
-    if (t) {
-        writeln("OK");
-    }
+    auto e = parseExpression("0 || 1 && 1");
+    writeln(e);
+    auto t = e.create_expression_tree();
     writeln(t);
+    t.walk(0);
+    writeln(t.value());
+    // auto tree = parseSVA("a ##1 a @@ b || c");
+    // writeln(tree);
+    // auto t2 = create_tree(tree);
+    // writeln(t2);
+
+    // auto t = Trace("00001010x");
+    // writeln(t);
 }
